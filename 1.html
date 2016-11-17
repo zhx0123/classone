@@ -13,11 +13,47 @@
 	}
 	#box:hover{
 		background-color:green;
-	hhgfhfg	
+	
 	}
+		
 	</style>
 </head>
 <body>
 	<div id="box"></div>
 </body>
+	<script>
+		(function(){
+			var oBox=document.getElementById('box');
+			oBox.addEventListener('mousedown',fnDown);
+			function fnDown(ev){
+				var disx=ev.pageX-this.offsetLeft;
+				var disy=ev.pageY-this.offsetTop;
+				document.addEventListener('mousedown',fnMove);
+				document.addEventListener('mousedown',fnUp);
+				function fnMove(ev){
+					var mx=ev.pageX-disx;
+					var my=ev.pageY-disy;
+					var w=window.innerWidth-mx;
+					var h=window.innerHeight-my;
+					if(mx<o){
+						mx=0;
+					}else
+					if(mx>w){
+						mx=w;
+					}
+					if(my<0){
+						my=0;
+					}else if(my>h){
+						mx=h;
+					}
+					oBox.style.left=mx+'px';
+					oBox.style.top=my+'px';
+				}
+				function fnUp(ev){
+					document.removeEventListener('mousedown',fnMove);
+					document.removeEventListener('mousedown',fnUp);
+				}
+			}
+		})()
+	</script>
 </html>
